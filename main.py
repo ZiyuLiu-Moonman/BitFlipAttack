@@ -106,7 +106,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         #var_list.append(torch.var(ori_grad, unbiased=False))
         ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)         
         #rand_grad = 10*torch.rand_like(ori_grad).cuda()
-        loss_grad = args.coefficiency * criterion_grad(ori_grad,rand_fix)
+        loss_grad = args.coefficiency * criterion_grad(ori_grad,rand_fix.detach())
         loss_grad.backward()
         '''
         
@@ -118,8 +118,9 @@ def train(loader, model, criterion, optimizer, epoch, C):
         '''
         
         
-        #add noise version2
-        model.module.linear.weight.grad = model.module.linear.weight.grad * 0.5 + rand_fix * 0.5
+        #add noise version
+        model.module.linear.weight.grad = rand_fix.detach()
+        #model.module.linear.weight.grad = model.module.linear.weight.grad * 0.5 + rand_fix.detach() * 0.5
         
         
         '''
