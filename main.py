@@ -253,7 +253,8 @@ def main():
         print("Shape:", grad_list.shape)
         print("Mean:", torch.mean(grad_list))
         print("Standard deviation:", torch.std(grad_list))
-        grad_array = grad_list.cpu().detach().numpy()
+        print(torch.eq(grad_list,rand_fix))
+        #grad_array = grad_list.cpu().detach().numpy()
         #print("grad_array", grad_array)
         
             
