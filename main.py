@@ -62,6 +62,18 @@ else:
     device = torch.device('cuda')
     print('Using gpu: ' + args.gpu)
 
+
+def FixRandom(row, column, mean, std):
+    # Generate the random tensor
+    rand_fix = torch.randn(row, column) * std + mean
+    rand_fix = rand_fix.to('cuda')
+    
+def GenerateLoss(layer_grad,rand_fix):
+    criterion_grad = nn.MSELoss()
+    ori_grad =layer_grad.clone()
+    ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)         
+    loss_grad = criterion_grad(ori_grad,rand_fix)
+    return loss_grad    
     
 def train(loader, model, criterion, optimizer, epoch, C):
     batch_time = AverageMeter('Time', ':6.3f')
@@ -100,6 +112,11 @@ def train(loader, model, criterion, optimizer, epoch, C):
 
         loss.backward(retain_graph=True)
         
+        rand_fix_linear = FixRandom(10, 64, 7.2760e-10, 0.0041)
+        loss_grad_linear = GenerateLoss()
+        loss_layer = loss_grad_linear
+        loss_layer.backward()
+        
         '''
         #add noise
         ori_grad =model.module.linear.weight.grad.clone()
@@ -117,11 +134,11 @@ def train(loader, model, criterion, optimizer, epoch, C):
         loss_grad.backward()
         '''
         
-        
+        '''
         #add noise version
         model.module.linear.weight.grad = rand_fix.detach()
         #model.module.linear.weight.grad = model.module.linear.weight.grad * 0.5 + rand_fix.detach() * 0.5
-        
+        '''
         
         '''
         linear_grad_max =  model.module.linear.weight.grad.abs().max().item()
@@ -267,15 +284,16 @@ def main():
 
 if __name__ == "__main__":
     var_list=[]
-    criterion_grad = nn.MSELoss()
+    #criterion_grad = nn.MSELoss()
     
+    '''
     #add fixed noise for the linear layer
     mean = 7.2760e-10
     std = 0.0041
     # Generate the random tensor
     rand_fix = torch.randn(10, 64) * std + mean
     rand_fix = rand_fix.to('cuda')
-    
+    '''
     main()
     
     for i in range(len(var_list)):
