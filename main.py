@@ -67,6 +67,7 @@ def FixRandom(row, column, mean, std):
     # Generate the random tensor
     rand_fix = torch.randn(row, column) * std + mean
     rand_fix = rand_fix.to('cuda')
+    return rand fix
     
 def GenerateLoss(layer_grad,rand_fix):
     criterion_grad = nn.MSELoss()
