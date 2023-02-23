@@ -113,7 +113,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         loss.backward(retain_graph=True)
         
         rand_fix_linear = FixRandom(10, 64, 7.2760e-10, 0.0041)
-        loss_grad_linear = GenerateLoss()
+        loss_grad_linear = GenerateLoss(model.module.linear.weight.grad, rand_fix_linear)
         loss_layer = loss_grad_linear
         loss_layer.backward()
         
