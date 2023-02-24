@@ -79,7 +79,7 @@ def GenerateLoss(layer_grad,rand_fix):
 def Calc(str, layer_grad):
     print(str, layer_grad.shape, "Mean", torch.mean(layer_grad), "std", torch.std(layer_grad))
     
-def PrintCalc():
+def PrintCalc(model):
     Calc("layer_linear", model.module.linear.weight.grad)
     
 
@@ -277,7 +277,7 @@ def main():
                 epoch, str(datetime.timedelta(seconds=(after - before))), lr, train_loss, train_acc, test_loss, test_acc))
         
         
-        PrintCalc()
+        PrintCalc(model)
         
         '''
         grad_list = model.module.linear.weight.grad.clone()
