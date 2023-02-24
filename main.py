@@ -74,7 +74,16 @@ def GenerateLoss(layer_grad,rand_fix):
     ori_grad =layer_grad.clone()
     ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)         
     loss_grad = criterion_grad(ori_grad,rand_fix)
-    return loss_grad    
+    return loss_grad
+
+def Calc(str, layer_grad):
+    print(str, layer_grad.shape, "Mean", torch.mean(layer_grad), "std", torch.std(layer_grad))
+    
+def PrintCalc():
+    Calc("layer_linear", model.module.linear.weight.grad)
+    
+
+    
     
 def train(loader, model, criterion, optimizer, epoch, C):
     batch_time = AverageMeter('Time', ':6.3f')
@@ -112,7 +121,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         top5.update(acc5.item(), inputs.size(0))
 
         loss.backward(retain_graph=True)
-        
+       
         rand_fix_linear = FixRandom(10, 64, 7.2760e-10, 0.0041)
         loss_grad_linear = GenerateLoss(model.module.linear.weight.grad, rand_fix_linear)
         loss_layer = loss_grad_linear
@@ -267,14 +276,18 @@ def main():
             log(log_filename, "{}\t{:.3}\t{:.3}\t{:.3}\t{:.3}\t{:.3}\t{:.3}".format(
                 epoch, str(datetime.timedelta(seconds=(after - before))), lr, train_loss, train_acc, test_loss, test_acc))
         
+        
+        PrintCalc()
+        
+        '''
         grad_list = model.module.linear.weight.grad.clone()
         print("Shape:", grad_list.shape)
         print("Mean:", torch.mean(grad_list))
         print("Standard deviation:", torch.std(grad_list))
-        print(torch.eq(grad_list,rand_fix))
+        #print(torch.eq(grad_list,rand_fix))
         #grad_array = grad_list.cpu().detach().numpy()
         #print("grad_array", grad_array)
-        
+        '''
             
             
     else:
