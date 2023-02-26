@@ -81,7 +81,7 @@ def Calc(str, layer_grad):
     
 def PrintCalc(model):
     Calc("conv_layer", model.module.conv1.weight.grad)
-    Calc("res1_block0_conv1", model.module.layer1.block[0].conv1.weight.grad)
+    Calc("res1_block0_conv1", model.module.layer1.layers.block[0].conv1.weight.grad)
     Calc("layer_linear", model.module.linear.weight.grad)
     
 
