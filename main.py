@@ -80,6 +80,8 @@ def Calc(str, layer_grad):
     print(str, layer_grad.shape, "Mean", torch.mean(layer_grad), "std", torch.std(layer_grad))
     
 def PrintCalc(model):
+    Calc("conv_layer", model.module.conv1.weight.grad)
+    Calc("res1_block0_conv1", model.module.layer1.module[0].cov1.weight.grad)
     Calc("layer_linear", model.module.linear.weight.grad)
     
 
