@@ -84,7 +84,7 @@ def PrintCalc(model):
     #obj = model()
     #print(obj.__dict__)
     #print(dir(obj))
-    #Calc("res1_block0_conv1", model.module.layer1.layers.block[0].conv1.weight.grad)
+    Calc("res1_block0_conv1", model.module.layer1.BasicBlock[0].conv1.weight.grad)
     Calc("layer_linear", model.module.linear.weight.grad)
     
 
@@ -281,7 +281,6 @@ def main():
             log(log_filename, "{}\t{:.3}\t{:.3}\t{:.3}\t{:.3}\t{:.3}\t{:.3}".format(
                 epoch, str(datetime.timedelta(seconds=(after - before))), lr, train_loss, train_acc, test_loss, test_acc))
         
-        model.module.summary()
         PrintCalc(model)
         
         '''
