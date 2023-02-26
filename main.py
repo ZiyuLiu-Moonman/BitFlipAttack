@@ -312,6 +312,7 @@ if __name__ == "__main__":
     '''
     main()
     
+    '''
     for i in range(len(var_list)):
          var_list[i] = var_list[i].cpu().data
     
@@ -319,3 +320,4 @@ if __name__ == "__main__":
     plt.plot(var_list)
     plt.title('linear layer')
     plt.show()
+    '''
