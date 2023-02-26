@@ -281,7 +281,7 @@ def main():
             log(log_filename, "{}\t{:.3}\t{:.3}\t{:.3}\t{:.3}\t{:.3}\t{:.3}".format(
                 epoch, str(datetime.timedelta(seconds=(after - before))), lr, train_loss, train_acc, test_loss, test_acc))
         
-        model.summary()
+        model.module.summary()
         PrintCalc(model)
         
         '''
