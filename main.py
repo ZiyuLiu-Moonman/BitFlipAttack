@@ -236,6 +236,7 @@ def main():
         C = torch.tensor(np.eye(args.num_classes)).to(device)
     model = models.__dict__[args.arch](n_output, args.bits, args.output_act)
     model = nn.DataParallel(model, gpu_list).to(device) if len(gpu_list) > 1 else nn.DataParallel(model).to(device)
+    print(model)
     
     if args.opt == 'adam':
         optimizer = Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
