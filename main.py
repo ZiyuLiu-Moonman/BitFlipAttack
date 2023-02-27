@@ -64,9 +64,15 @@ else:
     print('Using gpu: ' + args.gpu)
 
 
-def FixRandom(row, column, mean, std):
+def FixRand_linear(row, column, mean, std):
     # Generate the random tensor
     rand_fix = torch.randn(row, column) * std + mean
+    rand_fix = rand_fix.to('cuda')
+    return rand_fix
+
+def FixRand_conv(d1, d2, d3, d4, mean, std):
+    # Generate the random tensor
+    rand_fix = torch.randn(d1, d2, d3, d4) * std + mean
     rand_fix = rand_fix.to('cuda')
     return rand_fix
     
@@ -156,12 +162,72 @@ def train(loader, model, criterion, optimizer, epoch, C):
 
         loss.backward(retain_graph=True)
         
-        '''
-        rand_fix_linear = FixRandom(10, 64, 7.2760e-10, 0.0041)
+        rand_fix_conv = FixRandom_conv(16, 3, 3, 3, 0.0034, 0.0133)
+        loss_grad_linear = GenerateLoss(model.module.conv1.weight.grad, rand_fix_conv)
+        #res block1
+        rand_fix_conv101 = FixRandom_conv(16, 16, 3, 3, 0.0003, 0.0038)
+        loss_grad_conv101 = GenerateLoss(model.module.layer1[0].conv1.weight.grad, rand_fix_conv101)
+        
+        rand_fix_conv102 = FixRandom_conv(16, 16, 3, 3, -0.0002, 0.0031)
+        loss_grad_conv102 = GenerateLoss(model.module.layer1[0].conv2.weight.grad, rand_fix_conv102)
+        
+        rand_fix_conv111 = FixRandom_conv(16, 16, 3, 3, 0.0003, 0.0038)
+        loss_grad_conv111 = GenerateLoss(model.module.layer1[1].conv1.weight.grad, rand_fix_conv111)
+        
+        rand_fix_conv112 = FixRandom_conv(16, 16, 3, 3, -0.0002, 0.0031)
+        loss_grad_conv112 = GenerateLoss(model.module.layer1[1].conv2.weight.grad, rand_fix_conv112)
+        
+        rand_fix_conv121 = FixRandom_conv(16, 16, 3, 3, 0.0003, 0.0038)
+        loss_grad_conv121 = GenerateLoss(model.module.layer1[2].conv1.weight.grad, rand_fix_conv121)
+        
+        rand_fix_conv122 = FixRandom_conv(16, 16, 3, 3, -0.0002, 0.0031)
+        loss_grad_conv122 = GenerateLoss(model.module.layer1[2].conv2.weight.grad, rand_fix_conv122)
+        
+        #res block2
+        rand_fix_conv201 = FixRandom_conv(16, 16, 3, 3, 0.0003, 0.0038)
+        loss_grad_conv201 = GenerateLoss(model.module.layer1[0].conv1.weight.grad, rand_fix_conv101)
+        
+        rand_fix_conv202 = FixRandom_conv(16, 16, 3, 3, -0.0002, 0.0031)
+        loss_grad_conv202 = GenerateLoss(model.module.layer1[0].conv2.weight.grad, rand_fix_conv102)
+        
+        rand_fix_conv211 = FixRandom_conv(16, 16, 3, 3, 0.0003, 0.0038)
+        loss_grad_conv211 = GenerateLoss(model.module.layer1[1].conv1.weight.grad, rand_fix_conv111)
+        
+        rand_fix_conv212 = FixRandom_conv(16, 16, 3, 3, -0.0002, 0.0031)
+        loss_grad_conv212 = GenerateLoss(model.module.layer1[1].conv2.weight.grad, rand_fix_conv112)
+        
+        rand_fix_conv221 = FixRandom_conv(16, 16, 3, 3, 0.0003, 0.0038)
+        loss_grad_conv221 = GenerateLoss(model.module.layer1[2].conv1.weight.grad, rand_fix_conv121)
+        
+        rand_fix_conv222 = FixRandom_conv(16, 16, 3, 3, -0.0002, 0.0031)
+        loss_grad_conv222 = GenerateLoss(model.module.layer1[2].conv2.weight.grad, rand_fix_conv122)
+        
+        #res block3
+        rand_fix_conv301 = FixRandom_conv(16, 16, 3, 3, 0.0003, 0.0038)
+        loss_grad_conv301 = GenerateLoss(model.module.layer1[0].conv1.weight.grad, rand_fix_conv101)
+        
+        rand_fix_conv302 = FixRandom_conv(16, 16, 3, 3, -0.0002, 0.0031)
+        loss_grad_conv302 = GenerateLoss(model.module.layer1[0].conv2.weight.grad, rand_fix_conv102)
+        
+        rand_fix_conv311 = FixRandom_conv(16, 16, 3, 3, 0.0003, 0.0038)
+        loss_grad_conv311 = GenerateLoss(model.module.layer1[1].conv1.weight.grad, rand_fix_conv111)
+        
+        rand_fix_conv312 = FixRandom_conv(16, 16, 3, 3, -0.0002, 0.0031)
+        loss_grad_conv312 = GenerateLoss(model.module.layer1[1].conv2.weight.grad, rand_fix_conv112)
+        
+        rand_fix_conv321 = FixRandom_conv(16, 16, 3, 3, 0.0003, 0.0038)
+        loss_grad_conv121 = GenerateLoss(model.module.layer1[2].conv1.weight.grad, rand_fix_conv121)
+        
+        rand_fix_conv322 = FixRandom_conv(16, 16, 3, 3, -0.0002, 0.0031)
+        loss_grad_conv122 = GenerateLoss(model.module.layer1[2].conv2.weight.grad, rand_fix_conv122)
+        
+        #linear layer
+        rand_fix_linear = FixRandom_linear(10, 64, 1.3039e-09, 0.0059)
         loss_grad_linear = GenerateLoss(model.module.linear.weight.grad, rand_fix_linear)
+        
         loss_layer = loss_grad_linear
         loss_layer.backward()
-        '''
+        
         
         '''
         #add noise
@@ -344,6 +410,32 @@ if __name__ == "__main__":
     rand_fix = torch.randn(10, 64) * std + mean
     rand_fix = rand_fix.to('cuda')
     '''
+    #conv
+    rand_fix_conv = FixRandom_conv(16, 3, 3, 3, 0.0034, 0.0133)
+    #resblock1
+    rand_fix_conv101 = FixRandom_conv(16, 16, 3, 3, 0.0003, 0.0038)
+    rand_fix_conv102 = FixRandom_conv(16, 16, 3, 3, -0.0002, 0.0031)
+    rand_fix_conv111 = FixRandom_conv(16, 16, 3, 3, 7.7261e-05, 0.0031)
+    rand_fix_conv112 = FixRandom_conv(16, 16, 3, 3, -0.0003, 0.0030)
+    rand_fix_conv121 = FixRandom_conv(16, 16, 3, 3, -2.7759e-05, 0.0044)
+    rand_fix_conv122 = FixRandom_conv(16, 16, 3, 3, -0.0002, 0.0037)
+    #resblock2
+    rand_fix_conv201 = FixRandom_conv(32, 16, 3, 3, -0.0001, 0.0031)
+    rand_fix_conv202 = FixRandom_conv(32, 32, 3, 3, -0.0002, 0.0026)
+    rand_fix_conv211 = FixRandom_conv(32, 32, 3, 3, 6.2374e-05, 0.0026)
+    rand_fix_conv212 = FixRandom_conv(32, 32, 3, 3, 1.0013e-05, 0.0025)
+    rand_fix_conv221 = FixRandom_conv(32, 32, 3, 3, -0.0001, 0.0032)
+    rand_fix_conv222 = FixRandom_conv(32, 32, 3, 3, -6.6809e-05, 0.0023)
+    #resblock3
+    rand_fix_conv301 = FixRandom_conv(64, 32, 3, 3, 1.6031e-05, 0.0024)
+    rand_fix_conv302 = FixRandom_conv(64, 64, 3, 3, -1.3498e-05, 0.0023)
+    rand_fix_conv311 = FixRandom_conv(64, 64, 3, 3, -5.6638e-06, 0.0028)
+    rand_fix_conv312 = FixRandom_conv(64, 64, 3, 3, -4.6993e-05, 0.0023)
+    rand_fix_conv321 = FixRandom_conv(64, 64, 3, 3, -7.7275e-06, 0.0023)
+    rand_fix_conv322 = FixRandom_conv(64, 64, 3, 3, 3.9478e-05, 0.0013)
+    #linear
+    rand_fix_linear = FixRandom_linear(10, 64, 1.3039e-09, 0.0059)
+    
     main()
     
     '''
