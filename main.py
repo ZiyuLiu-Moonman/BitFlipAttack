@@ -162,7 +162,6 @@ def train(loader, model, criterion, optimizer, epoch, C):
 
         loss.backward(retain_graph=True)
         
-        rand_fix_conv = FixRandom_conv(16, 3, 3, 3, 0.0034, 0.0133)
         loss_grad_conv = GenerateLoss(model.module.conv1.weight.grad, rand_fix_conv)
         #res block1
         loss_grad_conv101 = GenerateLoss(model.module.layer1[0].conv1.weight.grad, rand_fix_conv101)
