@@ -81,11 +81,39 @@ def Calc(str, layer_grad):
     print(str, layer_grad.shape, "Mean", torch.mean(layer_grad), "std", torch.std(layer_grad))
     
 def PrintCalc(model):
+    #first conv
     Calc("conv_layer", model.module.conv1.weight.grad)
-    #obj = CifarResNet()
-    #print(obj.__dict__)
-    #print(dir(obj))
-    Calc("res1_block0_conv1", model.module.layer1[0].conv1.weight.grad)
+    #res block1
+    Calc("res_conv101", model.module.layer1[0].conv1.weight.grad)
+    Calc("res_conv102", model.module.layer1[0].conv2.weight.grad)
+    
+    Calc("res_conv111", model.module.layer1[1].conv1.weight.grad)
+    Calc("res_conv112", model.module.layer1[1].conv2.weight.grad)
+    
+    Calc("res_conv121", model.module.layer1[2].conv1.weight.grad)
+    Calc("res_conv122", model.module.layer1[2].conv2.weight.grad)
+    
+    #res block2
+    Calc("res_conv201", model.module.layer2[0].conv1.weight.grad)
+    Calc("res_conv202", model.module.layer2[0].conv2.weight.grad)
+    
+    Calc("res_conv211", model.module.layer2[1].conv1.weight.grad)
+    Calc("res_conv212", model.module.layer2[1].conv2.weight.grad)
+    
+    Calc("res_conv321", model.module.layer2[2].conv1.weight.grad)
+    Calc("res_conv322", model.module.layer2[2].conv2.weight.grad)
+    
+    #res block3
+    Calc("res_conv301", model.module.layer3[0].conv1.weight.grad)
+    Calc("res_conv302", model.module.layer3[0].conv2.weight.grad)
+    
+    Calc("res_conv311", model.module.layer3[1].conv1.weight.grad)
+    Calc("res_conv312", model.module.layer3[1].conv2.weight.grad)
+    
+    Calc("res_conv321", model.module.layer3[2].conv1.weight.grad)
+    Calc("res_conv322", model.module.layer3[2].conv2.weight.grad)
+    
+    #last linear
     Calc("layer_linear", model.module.linear.weight.grad)
     
 
