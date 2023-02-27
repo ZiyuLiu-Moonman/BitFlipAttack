@@ -100,8 +100,8 @@ def PrintCalc(model):
     Calc("res_conv211", model.module.layer2[1].conv1.weight.grad)
     Calc("res_conv212", model.module.layer2[1].conv2.weight.grad)
     
-    Calc("res_conv321", model.module.layer2[2].conv1.weight.grad)
-    Calc("res_conv322", model.module.layer2[2].conv2.weight.grad)
+    Calc("res_conv221", model.module.layer2[2].conv1.weight.grad)
+    Calc("res_conv222", model.module.layer2[2].conv2.weight.grad)
     
     #res block3
     Calc("res_conv301", model.module.layer3[0].conv1.weight.grad)
