@@ -38,7 +38,7 @@ parser.add_argument('--resume', action="store_true", help='resume training from 
 parser.add_argument('--finetune', action="store_true", help='for finetuning pre-trained imagenet models')
 parser.add_argument('--ft_path', type=str, default='results/imagenet/resnet50_quan8/', help='finetune model path')
 parser.add_argument('--seed', type=int, default=1, metavar='S', help='random seed (default: 1)')
-parser.add_argument('--coefficiency', '-coe', default=1, type=int, help='coefficiency value')
+#parser.add_argument('--coefficiency', '-coe', default=1, type=int, help='coefficiency value')
 args = parser.parse_args()
 
 if not os.path.exists(args.outdir):
@@ -80,7 +80,7 @@ def GenerateLoss(layer_grad,rand_fix):
     criterion_grad = nn.MSELoss()
     ori_grad =layer_grad.clone()
     ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)         
-    loss_grad = criterion_grad(ori_grad,rand_fix)
+    loss_grad = criterion_grad(ori_grad,rand_fix.detach())
     return loss_grad
 
 def Calc(str, layer_grad):
@@ -190,7 +190,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         #linear layer
         loss_grad_linear = GenerateLoss(model.module.linear.weight.grad, rand_fix_linear)
         
-        loss_layer = args.coefficiency * (loss_grad_conv+ loss_grad_conv101 + loss_grad_conv102 + loss_grad_conv111+ loss_grad_conv112+ loss_grad_conv121+ loss_grad_conv122+ loss_grad_conv201+ loss_grad_conv202+ loss_grad_conv211+loss_grad_conv212+ loss_grad_conv221+ loss_grad_conv222+ loss_grad_conv301+ loss_grad_conv302+loss_grad_conv311+ loss_grad_conv312+ loss_grad_conv321+ loss_grad_conv322+ loss_grad_linear)
+        loss_layer = 100 * (loss_grad_conv+ loss_grad_conv101 + loss_grad_conv102 + loss_grad_conv111+ loss_grad_conv112+ loss_grad_conv121+ loss_grad_conv122+ loss_grad_conv201+ loss_grad_conv202+ loss_grad_conv211+loss_grad_conv212+ loss_grad_conv221+ loss_grad_conv222+ loss_grad_conv301+ loss_grad_conv302+loss_grad_conv311+ loss_grad_conv312+ loss_grad_conv321+ loss_grad_conv322+ loss_grad_linear)
         loss_layer.backward()
         
         
