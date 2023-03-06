@@ -52,7 +52,7 @@ def make_layers(cfg, batch_norm=False):
         if v == 'M':
             layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
         else:
-            conv2d = quan_Conv2d(in_channels, out_channels = v, kernel_size=3,stride=1, padding=1, bias=False, nbits = self.nbits)
+            conv2d = quan_Conv2d(in_channels, out_channels = v, kernel_size=3, stride=1, padding=1, bias=False, n_bits = self.n_bits)
             if batch_norm:
                 layers += [conv2d, nn.BatchNorm2d(v), nn.ReLU(inplace=True)]
             else:
