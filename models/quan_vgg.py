@@ -72,7 +72,7 @@ def vgg11():
     return VGG(make_layers(cfg['A']))
 
 
-def vgg11_bn():
+def vgg11_bn(num_output=10, n_bits=8, output_act='linear'):
     """VGG 11-layer model (configuration "A") with batch normalization"""
     return VGG(make_layers(cfg['A'], batch_norm=True))
 
