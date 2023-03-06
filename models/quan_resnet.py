@@ -276,11 +276,12 @@ def resnet50_quan_mid(num_output=1000, n_bits=8):
     return model
 
 #For VGG
+'''
 __all__ = [
     'VGG', 'vgg11', 'vgg11_bn', 'vgg13', 'vgg13_bn', 'vgg16', 'vgg16_bn',
     'vgg19_bn', 'vgg19',
 ]
-
+'''
 
 class VGG(nn.Module):
     '''
@@ -342,6 +343,6 @@ cfg = {
 }
 
 
-def vgg11_bn(num_classes=10):
+def vgg11(num_classes=10):
     """VGG 11-layer model (configuration "A")"""
     return VGG(make_layers(cfg['A'],batch_norm=True))
