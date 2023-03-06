@@ -24,7 +24,7 @@ class VGG(nn.Module):
             nn.Dropout(),
             quan_Linear(512, 512, n_bits=self.n_bits),
             nn.ReLU(True),
-            quan_Linear(512, num_outputs, n_bits=self.n_bits),
+            quan_Linear(512, num_output, n_bits=self.n_bits),
         )
          # Initialize weights
         for m in self.modules():
