@@ -42,7 +42,7 @@ class VGG(nn.Module):
                 for k in range(len(n)):
                     x[0,n[k]]=0 
         out = self.classifier(x)
-        return out,x
+        return x
 
 
 def make_layers(cfg, batch_norm=False):
