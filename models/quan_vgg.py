@@ -11,17 +11,17 @@ class VGG(nn.Module):
     '''
     VGG model 
     '''
-    def __init__(self, features):
+    def __init__(self, features, num_output=10, n_bits=8, output_act='linear'):
         super(VGG, self).__init__()
         self.features = features
         self.classifier = nn.Sequential(
             nn.Dropout(),
-            quan_Linear(512, 512),
+            quan_Linear(512, 512, n_bits=self.n_bits),
             nn.ReLU(True),
             nn.Dropout(),
-            quan_Linear(512, 512),
+            quan_Linear(512, 512, n_bits=self.n_bits),
             nn.ReLU(True),
-            quan_Linear(512, 10),
+            quan_Linear(512, num_outputs, n_bits=self.n_bits),
         )
          # Initialize weights
         for m in self.modules():
@@ -49,7 +49,7 @@ def make_layers(cfg, batch_norm=False):
         if v == 'M':
             layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
         else:
-            conv2d = quan_Conv2d(in_channels, v, kernel_size=3,stride=1, padding=1)
+            conv2d = quan_Conv2d(in_channels, out_channels = v, kernel_size=3,stride=1, padding=1, bias=False, nbits = self.nbits)
             if batch_norm:
                 layers += [conv2d, nn.BatchNorm2d(v), nn.ReLU(inplace=True)]
             else:
