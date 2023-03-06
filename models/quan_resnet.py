@@ -342,6 +342,6 @@ cfg = {
 }
 
 
-def vgg11(num_classes=10):
+def vgg11_bn(num_classes=10):
     """VGG 11-layer model (configuration "A")"""
     return VGG(make_layers(cfg['A'],batch_norm=True))
