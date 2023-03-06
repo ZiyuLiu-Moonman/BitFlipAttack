@@ -14,6 +14,9 @@ class VGG(nn.Module):
     def __init__(self, features, num_output=10, n_bits=8, output_act='linear'):
         super(VGG, self).__init__()
         self.features = features
+        self.in_planes = 16
+        self.n_bits = n_bits
+        self.output_act = None
         self.classifier = nn.Sequential(
             nn.Dropout(),
             quan_Linear(512, 512, n_bits=self.n_bits),
