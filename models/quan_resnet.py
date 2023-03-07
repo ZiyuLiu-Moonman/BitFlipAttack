@@ -314,14 +314,14 @@ class VGG(nn.Module):
         return out,x
 
 
-def make_layers(cfg, batch_norm=False):
+def make_layers(cfg, n_bits, batch_norm=False):
     layers = []
     in_channels = 3
     for v in cfg:
         if v == 'M':
             layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
         else:
-            conv2d = quan_Conv2d(in_channels, out_channels = v, kernel_size=3, stride=1, padding=1, bias=False, n_bits = self.n_bits)
+            conv2d = quan_Conv2d(in_channels, out_channels = v, kernel_size=3, stride=1, padding=1, bias=False, n_bits = n_bits)
             if batch_norm:
                 layers += [conv2d, nn.BatchNorm2d(v), nn.ReLU(inplace=True)]
             else:
@@ -346,7 +346,7 @@ def vgg11():
 
 def vgg11_bn(num_output=10, n_bits=8, output_act='linear'):
     """VGG 11-layer model (configuration "A") with batch normalization"""
-    model = VGG(make_layers(cfg['A'], batch_norm=True))
+    model = VGG(make_layers(cfg['A'], n_bits, batch_norm=True))
     return model
 
 
