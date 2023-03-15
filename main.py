@@ -208,6 +208,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         '''
         
         #add noise
+        criterion_grad = nn.MSELoss()
         ori_grad =model.module.linear.weight.grad.clone()
         #var_list.append(torch.var(ori_grad, unbiased=False))
         ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)         
