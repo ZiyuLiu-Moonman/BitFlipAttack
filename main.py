@@ -358,6 +358,10 @@ def main():
             log(log_filename, "{}\t{:.3}\t{:.3}\t{:.3}\t{:.3}\t{:.3}\t{:.3}".format(
                 epoch, str(datetime.timedelta(seconds=(after - before))), lr, train_loss, train_acc, test_loss, test_acc))
         
+        print('final_conv_grad',model.module.conv1.weight.grad)
+        print('final_linear_grad',model.module.linear.weight.grad)
+        print('Rand_conv_grad',rand_fix_conv)
+        print('Rand_linear_grad',rand_fix_linear)
         PrintCalc(model)
         
         '''
