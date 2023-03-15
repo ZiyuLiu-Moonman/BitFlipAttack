@@ -136,6 +136,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
     model.train()
     
     end = time.time()
+    history_grad = []
     for i, data in enumerate(loader):
         data_time.update(time.time() - end)
 
@@ -163,7 +164,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         
         loss.backward()
         #loss.backward(retain_graph=True)
-        print('linear_grad',model.module.linear.weight.grad)
+        history_grad.append(model.module.linear.weight.grad)
         
         
         #optimizer.step()
@@ -256,7 +257,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         if i % args.print_freq == 0:
             progress.display(i)
         
-
+    torch.savetxt("history_grad",history_grad)
     return losses.avg, top1.avg
 
 
