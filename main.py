@@ -166,11 +166,9 @@ def train(loader, model, criterion, optimizer, epoch, C):
         
         
         
-        #optimizer.step()
-        
-        
+        #optimizer.step(）
         #grad_1 = model.module.linear.weight.grad.clone().detach()
-        '''
+        
         loss_grad_conv = GenerateLoss(model.module.conv1.weight.grad, rand_fix_conv)
         #res block1
         loss_grad_conv101 = GenerateLoss(model.module.layer1[0].conv1.weight.grad, rand_fix_conv101)
@@ -199,7 +197,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         #linear layer
         loss_grad_linear = GenerateLoss(model.module.linear.weight.grad, rand_fix_linear)
         
-        loss_layer = 100 * (loss_grad_conv+ loss_grad_conv101 + loss_grad_conv102 + loss_grad_conv111+ loss_grad_conv112+ loss_grad_conv121+ loss_grad_conv122+ loss_grad_conv201+ loss_grad_conv202+ loss_grad_conv211+loss_grad_conv212+ loss_grad_conv221+ loss_grad_conv222+ loss_grad_conv301+ loss_grad_conv302+loss_grad_conv311+ loss_grad_conv312+ loss_grad_conv321+ loss_grad_conv322+ loss_grad_linear)
+        loss_layer = 1 * (loss_grad_conv+ loss_grad_conv101 + loss_grad_conv102 + loss_grad_conv111+ loss_grad_conv112+ loss_grad_conv121+ loss_grad_conv122+ loss_grad_conv201+ loss_grad_conv202+ loss_grad_conv211+loss_grad_conv212+ loss_grad_conv221+ loss_grad_conv222+ loss_grad_conv301+ loss_grad_conv302+loss_grad_conv311+ loss_grad_conv312+ loss_grad_conv321+ loss_grad_conv322+ loss_grad_linear)
         #print('loss_layer',loss_layer)
         #loss_new = loss + loss_layer
         #print('loss,loss_layer,loss_new',loss,loss_layer,loss_new)
@@ -207,10 +205,10 @@ def train(loader, model, criterion, optimizer, epoch, C):
        
         loss_layer.backward()
         
-        grad_2 = model.module.linear.weight.grad.clone().detach()
-        print(grad_1.equal(grad_2))
-        '''
+        #grad_2 = model.module.linear.weight.grad.clone().detach()
+        #print(grad_1.equal(grad_2))
         
+        '''
         #add noise
         criterion_grad = nn.MSELoss()
         ori_grad =model.module.linear.weight.grad.clone()
@@ -221,7 +219,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         loss_grad.backward()
         #grad_2 = model.module.linear.weight.grad.clone()
         #print(ori_grad.equal(grad_2))
-        
+        '''
         '''
         ori_grad = model.module.linear.weight.grad.clone()
         ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)
