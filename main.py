@@ -38,7 +38,7 @@ parser.add_argument('--resume', action="store_true", help='resume training from 
 parser.add_argument('--finetune', action="store_true", help='for finetuning pre-trained imagenet models')
 parser.add_argument('--ft_path', type=str, default='results/imagenet/resnet50_quan8/', help='finetune model path')
 parser.add_argument('--seed', type=int, default=1, metavar='S', help='random seed (default: 1)')
-#parser.add_argument('--coefficiency', '-coe', default=1, type=int, help='coefficiency value')
+parser.add_argument('--coefficiency', '-coe', default=1, type=int, help='coefficiency value')
 args = parser.parse_args()
 
 if not os.path.exists(args.outdir):
@@ -212,7 +212,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         #var_list.append(torch.var(ori_grad, unbiased=False))
         ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)         
         #rand_grad = 10*torch.rand_like(ori_grad).cuda()
-        loss_grad = args.coefficiency * criterion_grad(ori_grad,rand_fix.detach())
+        loss_grad = args.coefficiency * criterion_grad(ori_grad,rand_fix_linear.detach())
         loss_grad.backward()
         grad_2 = model.module.linear.weight.grad.clone().detach()
         print(grad_1.equal(grad_2))
