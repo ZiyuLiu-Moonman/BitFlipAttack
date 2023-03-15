@@ -200,8 +200,8 @@ def train(loader, model, criterion, optimizer, epoch, C):
         print('loss,loss_layer,loss_new',loss,loss_layer,loss_new)
         loss_new.backward()
         
-        grad_2 = model.module.linear.weight.grad.clone().detach()
-        print(grad_1.equal(grad_2))
+        #grad_2 = model.module.linear.weight.grad.clone().detach()
+        #print(grad_1.equal(grad_2))
         
         '''
         #add noise
