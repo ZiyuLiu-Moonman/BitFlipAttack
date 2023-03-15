@@ -162,7 +162,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         top1.update(acc1.item(), inputs.size(0))
         top5.update(acc5.item(), inputs.size(0))
         
-        loss.backward()
+        loss.backward(retain_graph=True)
         
         
         
@@ -210,7 +210,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         grad_2 = model.module.linear.weight.grad.clone().detach()
         print(grad_1.equal(grad_2))
         '''
-        '''
+        
         #add noise
         criterion_grad = nn.MSELoss()
         ori_grad =model.module.linear.weight.grad.clone()
@@ -219,9 +219,9 @@ def train(loader, model, criterion, optimizer, epoch, C):
         #rand_grad = 10*torch.rand_like(ori_grad).cuda()
         loss_grad = args.coefficiency * criterion_grad(ori_grad,rand_fix_linear.detach())
         loss_grad.backward()
-        grad_2 = model.module.linear.weight.grad.clone()
-        print(ori_grad.equal(grad_2))
-        '''
+        #grad_2 = model.module.linear.weight.grad.clone()
+        #print(ori_grad.equal(grad_2))
+        
         '''
         ori_grad = model.module.linear.weight.grad.clone()
         ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)
