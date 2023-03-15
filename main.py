@@ -257,7 +257,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         if i % args.print_freq == 0:
             progress.display(i)
         
-    torch.savetxt("history_grad",history_grad)
+    torch.save("history_grad",history_grad)
     return losses.avg, top1.avg
 
 
