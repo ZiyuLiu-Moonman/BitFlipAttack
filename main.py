@@ -161,8 +161,8 @@ def train(loader, model, criterion, optimizer, epoch, C):
         top1.update(acc1.item(), inputs.size(0))
         top5.update(acc5.item(), inputs.size(0))
 
-        #loss.backward(retain_graph=True)
-        #optimizer.step()
+        loss.backward(retain_graph=True)
+        optimizer.step()
         
         #grad_1 = model.module.linear.weight.grad.clone().detach()
         
@@ -196,9 +196,9 @@ def train(loader, model, criterion, optimizer, epoch, C):
         
         loss_layer = 100 * (loss_grad_conv+ loss_grad_conv101 + loss_grad_conv102 + loss_grad_conv111+ loss_grad_conv112+ loss_grad_conv121+ loss_grad_conv122+ loss_grad_conv201+ loss_grad_conv202+ loss_grad_conv211+loss_grad_conv212+ loss_grad_conv221+ loss_grad_conv222+ loss_grad_conv301+ loss_grad_conv302+loss_grad_conv311+ loss_grad_conv312+ loss_grad_conv321+ loss_grad_conv322+ loss_grad_linear)
         #print('loss_layer',loss_layer)
-        loss_new = loss + loss_layer
+        #loss_new = loss + loss_layer
         print('loss,loss_layer,loss_new',loss,loss_layer,loss_new)
-        loss_new.backward()
+        loss_layer.backward()
         
         #grad_2 = model.module.linear.weight.grad.clone().detach()
         #print(grad_1.equal(grad_2))
