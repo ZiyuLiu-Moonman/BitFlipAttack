@@ -165,7 +165,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         #optimizer.step()
         
         
-        grad_1 = model.module.linear.weight.grad.clone().detach()
+        #grad_1 = model.module.linear.weight.grad.clone().detach()
         '''
         loss_grad_conv = GenerateLoss(model.module.conv1.weight.grad, rand_fix_conv)
         #res block1
@@ -215,8 +215,8 @@ def train(loader, model, criterion, optimizer, epoch, C):
         #rand_grad = 10*torch.rand_like(ori_grad).cuda()
         loss_grad = args.coefficiency * criterion_grad(ori_grad,rand_fix_linear.detach())
         loss_grad.backward()
-        grad_2 = model.module.linear.weight.grad.clone().detach()
-        print(grad_1.equal(grad_2))
+        grad_2 = model.module.linear.weight.grad.clone()
+        print(ori_grad.equal(grad_2))
         
         '''
         ori_grad = model.module.linear.weight.grad.clone()
