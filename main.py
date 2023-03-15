@@ -136,7 +136,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
     model.train()
     
     end = time.time()
-    history_grad = []
+    
     for i, data in enumerate(loader):
         data_time.update(time.time() - end)
 
@@ -145,7 +145,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
 
         outputs = model(inputs)
         loss = criterion(outputs, targets)
-        print('loss',loss)
+        
 
         if args.clustering:
             loss += clustering_loss(model, args.lambda_coeff)
@@ -163,8 +163,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         top5.update(acc5.item(), inputs.size(0))
         
         loss.backward()
-        #loss.backward(retain_graph=True)
-        history_grad.append(model.module.linear.weight.grad)
+        
         
         
         #optimizer.step()
@@ -257,7 +256,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         if i % args.print_freq == 0:
             progress.display(i)
         
-    torch.save("history_grad",history_grad)
+    print('linear_grad',model.module.linear.weight.grad)
     return losses.avg, top1.avg
 
 
