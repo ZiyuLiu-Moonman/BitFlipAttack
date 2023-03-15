@@ -164,7 +164,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         loss.backward(retain_graph=True)
         #optimizer.step()
         
-        grad_1 = model.module.linear.weight.grad.clone()
+        grad_1 = model.module.linear.weight.grad.clone().detach()
         
         loss_grad_conv = GenerateLoss(model.module.conv1.weight.grad, rand_fix_conv)
         #res block1
@@ -198,7 +198,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         print('loss_layer',loss_layer)
         loss_layer.backward()
         
-        grad_2 = model.module.linear.weight.grad.clone()
+        grad_2 = model.module.linear.weight.grad.clone().detach()
         print(grad_1.equal(grad_2))
         
         '''
