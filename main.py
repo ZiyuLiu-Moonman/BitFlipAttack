@@ -78,7 +78,7 @@ def FixRand_conv(d1, d2, d3, d4, mean, std):
     
 def GenerateLoss(layer_grad,rand_fix):
     criterion_grad = nn.MSELoss()
-    ori_grad =layer_grad.clone().detach()
+    ori_grad =layer_grad.clone()
     ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)         
     loss_grad = criterion_grad(ori_grad,rand_fix)
     return loss_grad
