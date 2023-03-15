@@ -162,9 +162,9 @@ def train(loader, model, criterion, optimizer, epoch, C):
         top5.update(acc5.item(), inputs.size(0))
 
         loss.backward(retain_graph=True)
-        optimizer.step()
+        #optimizer.step()
         
-        #grad_1 = model.module.linear.weight.grad.clone().detach()
+        grad_1 = model.module.linear.weight.grad.clone().detach()
         
         loss_grad_conv = GenerateLoss(model.module.conv1.weight.grad, rand_fix_conv)
         #res block1
@@ -200,8 +200,8 @@ def train(loader, model, criterion, optimizer, epoch, C):
         #print('loss,loss_layer,loss_new',loss,loss_layer,loss_new)
         loss_layer.backward()
         
-        #grad_2 = model.module.linear.weight.grad.clone().detach()
-        #print(grad_1.equal(grad_2))
+        grad_2 = model.module.linear.weight.grad.clone().detach()
+        print(grad_1.equal(grad_2))
         
         '''
         #add noise
