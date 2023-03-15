@@ -160,8 +160,12 @@ def train(loader, model, criterion, optimizer, epoch, C):
         losses.update(loss.item(), inputs.size(0))
         top1.update(acc1.item(), inputs.size(0))
         top5.update(acc5.item(), inputs.size(0))
-
-        loss.backward(retain_graph=True)
+        
+        loss.backward()
+        #loss.backward(retain_graph=True)
+        print('linear_grad',model.module.linear.weight.grad)
+        
+        
         #optimizer.step()
         
         
@@ -206,7 +210,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         grad_2 = model.module.linear.weight.grad.clone().detach()
         print(grad_1.equal(grad_2))
         '''
-        
+        '''
         #add noise
         criterion_grad = nn.MSELoss()
         ori_grad =model.module.linear.weight.grad.clone()
@@ -217,7 +221,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         loss_grad.backward()
         grad_2 = model.module.linear.weight.grad.clone()
         print(ori_grad.equal(grad_2))
-        
+        '''
         '''
         ori_grad = model.module.linear.weight.grad.clone()
         ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)
