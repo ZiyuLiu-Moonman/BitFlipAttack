@@ -80,7 +80,7 @@ def GenerateLoss(layer_grad,rand_fix):
     criterion_grad = nn.MSELoss()
     ori_grad =layer_grad.clone()
     ori_grad = torch.autograd.Variable(ori_grad, requires_grad=True)         
-    loss_grad = criterion_grad(ori_grad,rand_fix)
+    loss_grad = criterion_grad(ori_grad,rand_fix.detach())
     return loss_grad
 
 def Calc(str, layer_grad):
