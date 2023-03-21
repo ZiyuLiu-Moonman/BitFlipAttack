@@ -163,7 +163,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         top5.update(acc5.item(), inputs.size(0))
         
         loss.backward(retain_graph=True)
-        #optimizer.step()
+        optimizer.step()
         
         #grad_1 = model.module.linear.weight.grad.clone().detach()
         
@@ -195,7 +195,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         #linear layer
         loss_grad_linear = GenerateLoss(model.module.linear.weight.grad, rand_fix_linear)
         
-        loss_layer = 1 * (loss_grad_conv+ loss_grad_conv101 + loss_grad_conv102 + loss_grad_conv111+ loss_grad_conv112+ loss_grad_conv121+ loss_grad_conv122+ loss_grad_conv201+ loss_grad_conv202+ loss_grad_conv211+loss_grad_conv212+ loss_grad_conv221+ loss_grad_conv222+ loss_grad_conv301+ loss_grad_conv302+loss_grad_conv311+ loss_grad_conv312+ loss_grad_conv321+ loss_grad_conv322+ loss_grad_linear)
+        loss_layer = 100 * (loss_grad_conv+ loss_grad_conv101 + loss_grad_conv102 + loss_grad_conv111+ loss_grad_conv112+ loss_grad_conv121+ loss_grad_conv122+ loss_grad_conv201+ loss_grad_conv202+ loss_grad_conv211+loss_grad_conv212+ loss_grad_conv221+ loss_grad_conv222+ loss_grad_conv301+ loss_grad_conv302+loss_grad_conv311+ loss_grad_conv312+ loss_grad_conv321+ loss_grad_conv322+ loss_grad_linear)
         #print('loss_layer',loss_layer)
         #loss_new = loss + loss_layer
         #print('loss,loss_layer,loss_new',loss,loss_layer,loss_new)
@@ -358,10 +358,10 @@ def main():
             log(log_filename, "{}\t{:.3}\t{:.3}\t{:.3}\t{:.3}\t{:.3}\t{:.3}".format(
                 epoch, str(datetime.timedelta(seconds=(after - before))), lr, train_loss, train_acc, test_loss, test_acc))
         
-        print('final_conv_grad',model.module.conv1.weight.grad)
-        print('final_linear_grad',model.module.linear.weight.grad)
-        print('Rand_conv_grad',rand_fix_conv)
-        print('Rand_linear_grad',rand_fix_linear)
+        #print('final_conv_grad',model.module.conv1.weight.grad)
+        #print('final_linear_grad',model.module.linear.weight.grad)
+        #print('Rand_conv_grad',rand_fix_conv)
+        #print('Rand_linear_grad',rand_fix_linear)
         PrintCalc(model)
         
         '''
