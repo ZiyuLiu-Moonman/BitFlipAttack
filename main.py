@@ -169,7 +169,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         
         #grad_1 = model.module.linear.weight.grad.clone().detach()
         
-        model.module.conv1.weight.grad = 0.5*(model.module.conv1.weight.grad + rand_fix_conv)
+        model.module.conv1.weight.grad = 0.5*model.module.conv1.weight.grad + 0.5*rand_fix_conv
         
         model.module.layer1[0].conv1.weight.grad = 0.5*model.module.layer1[0].conv1.weight.grad + 0.5*rand_fix_conv101
         model.module.layer1[0].conv2.weight.grad = 0.5*model.module.layer1[0].conv2.weight.grad + 0.5*rand_fix_conv102
@@ -192,7 +192,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         model.module.layer3[2].conv1.weight.grad = 0.5*model.module.layer3[2].conv1.weight.grad + 0.5*rand_fix_conv321
         model.module.layer3[2].conv2.weight.grad = 0.5*model.module.layer3[2].conv2.weight.grad + 0.5*rand_fix_conv322
         
-        model.module.linear.weight.grad = 0.5*(model.module.linear.weight.grad + rand_fix_linear)
+        model.module.linear.weight.grad = 0.5*model.module.linear.weight.grad + 0.5*rand_fix_linear
         
         '''
         loss_grad_conv = GenerateLoss(model.module.conv1.weight.grad, rand_fix_conv)
