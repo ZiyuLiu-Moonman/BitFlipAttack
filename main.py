@@ -171,26 +171,26 @@ def train(loader, model, criterion, optimizer, epoch, C):
         
         model.module.conv1.weight.grad = 0.5*(model.module.conv1.weight.grad + rand_fix_conv)
         
-        model.module.layer1[0].conv1.weight.grad = 0.5*(model.module.layer1[0].conv1.weight.grad + rand_fix_conv101)
-        model.module.layer1[0].conv2.weight.grad = 0.5*(model.module.layer1[0].conv2.weight.grad + rand_fix_conv102)
-        model.module.layer1[1].conv1.weight.grad = 0.5*(model.module.layer1[1].conv1.weight.grad + rand_fix_conv111)
-        model.module.layer1[1].conv2.weight.grad = 0.5*(model.module.layer1[1].conv2.weight.grad + rand_fix_conv112)
-        model.module.layer1[2].conv1.weight.grad = 0.5*(model.module.layer1[2].conv1.weight.grad + rand_fix_conv121)
-        model.module.layer1[2].conv2.weight.grad = 0.5*(model.module.layer1[2].conv2.weight.grad + rand_fix_conv122)
+        model.module.layer1[0].conv1.weight.grad = 0.5*model.module.layer1[0].conv1.weight.grad + 0.5*rand_fix_conv101
+        model.module.layer1[0].conv2.weight.grad = 0.5*model.module.layer1[0].conv2.weight.grad + 0.5*rand_fix_conv102
+        model.module.layer1[1].conv1.weight.grad = 0.5*model.module.layer1[1].conv1.weight.grad + 0.5*rand_fix_conv111
+        model.module.layer1[1].conv2.weight.grad = 0.5*model.module.layer1[1].conv2.weight.grad + 0.5*rand_fix_conv112
+        model.module.layer1[2].conv1.weight.grad = 0.5*model.module.layer1[2].conv1.weight.grad + 0.5*rand_fix_conv121
+        model.module.layer1[2].conv2.weight.grad = 0.5*model.module.layer1[2].conv2.weight.grad + 0.5*rand_fix_conv122
         
-        model.module.layer2[0].conv1.weight.grad = 0.5*(model.module.layer2[0].conv1.weight.grad + rand_fix_conv201)
-        model.module.layer2[0].conv2.weight.grad = 0.5*(model.module.layer2[0].conv2.weight.grad + rand_fix_conv202)
-        model.module.layer2[1].conv1.weight.grad = 0.5*(model.module.layer2[1].conv1.weight.grad + rand_fix_conv211)
-        model.module.layer2[1].conv2.weight.grad = 0.5*(model.module.layer2[1].conv2.weight.grad + rand_fix_conv212)
-        model.module.layer2[2].conv1.weight.grad = 0.5*(model.module.layer2[2].conv1.weight.grad + rand_fix_conv221)
-        model.module.layer2[2].conv2.weight.grad = 0.5*(model.module.layer2[2].conv2.weight.grad + rand_fix_conv222)
+        model.module.layer2[0].conv1.weight.grad = 0.5*model.module.layer2[0].conv1.weight.grad + 0.5*rand_fix_conv201
+        model.module.layer2[0].conv2.weight.grad = 0.5*model.module.layer2[0].conv2.weight.grad + 0.5*rand_fix_conv202
+        model.module.layer2[1].conv1.weight.grad = 0.5*model.module.layer2[1].conv1.weight.grad + 0.5*rand_fix_conv211
+        model.module.layer2[1].conv2.weight.grad = 0.5*model.module.layer2[1].conv2.weight.grad + 0.5*rand_fix_conv212
+        model.module.layer2[2].conv1.weight.grad = 0.5*model.module.layer2[2].conv1.weight.grad + 0.5*rand_fix_conv221
+        model.module.layer2[2].conv2.weight.grad = 0.5*model.module.layer2[2].conv2.weight.grad + 0.5*rand_fix_conv222
         
-        model.module.layer3[0].conv1.weight.grad = 0.5*(model.module.layer3[0].conv1.weight.grad + rand_fix_conv301)
-        model.module.layer3[0].conv2.weight.grad = 0.5*(model.module.layer3[0].conv2.weight.grad + rand_fix_conv302)
-        model.module.layer3[1].conv1.weight.grad = 0.5*(model.module.layer3[1].conv1.weight.grad + rand_fix_conv311)
-        model.module.layer3[1].conv2.weight.grad = 0.5*(model.module.layer3[1].conv2.weight.grad + rand_fix_conv312)
-        model.module.layer3[2].conv1.weight.grad = 0.5*(model.module.layer3[2].conv1.weight.grad + rand_fix_conv321)
-        model.module.layer3[2].conv2.weight.grad = 0.5*(model.module.layer3[2].conv2.weight.grad + rand_fix_conv322)
+        model.module.layer3[0].conv1.weight.grad = 0.5*model.module.layer3[0].conv1.weight.grad + 0.5*rand_fix_conv301
+        model.module.layer3[0].conv2.weight.grad = 0.5*model.module.layer3[0].conv2.weight.grad + 0.5*rand_fix_conv302
+        model.module.layer3[1].conv1.weight.grad = 0.5*model.module.layer3[1].conv1.weight.grad + 0.5*rand_fix_conv311
+        model.module.layer3[1].conv2.weight.grad = 0.5*model.module.layer3[1].conv2.weight.grad + 0.5*rand_fix_conv312
+        model.module.layer3[2].conv1.weight.grad = 0.5*model.module.layer3[2].conv1.weight.grad + 0.5*rand_fix_conv321
+        model.module.layer3[2].conv2.weight.grad = 0.5*model.module.layer3[2].conv2.weight.grad + 0.5*rand_fix_conv322
         
         model.module.linear.weight.grad = 0.5*(model.module.linear.weight.grad + rand_fix_linear)
         
@@ -281,7 +281,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         if i % args.print_freq == 0:
             progress.display(i)
         
-    print('linear_grad',model.module.linear.weight.grad)
+    #print('linear_grad',model.module.linear.weight.grad)
     return losses.avg, top1.avg
 
 
