@@ -124,7 +124,7 @@ def PrintCalc(model):
     Calc("layer_linear", model.module.linear.weight.grad)
     
 def DirectPoisonGrad(layer_grad,rand_fix):
-    updatedgrad = 0.8*layer_grad + 0.2*rand_fix
+    updatedgrad = 0.9*layer_grad + 0.1*rand_fix
     return updatedgrad
         
 def train(loader, model, criterion, optimizer, epoch, C):
