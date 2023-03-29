@@ -146,7 +146,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
 
         outputs = model(inputs)
         loss = criterion(outputs, targets)
-        print('first_loss',loss)
+        #print('first_loss',loss)
         
 
         if args.clustering:
