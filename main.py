@@ -174,7 +174,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         model.module.layer1[0].conv1.weight.grad = 0.5*(model.module.layer1[0].conv1.weight.grad + rand_fix_conv101)
         model.module.layer1[0].conv2.weight.grad = 0.5*(model.module.layer1[0].conv2.weight.grad + rand_fix_conv102)
         model.module.layer1[1].conv1.weight.grad = 0.5*(model.module.layer1[1].conv1.weight.grad + rand_fix_conv111)
-        model.module.layer1[1].conv2.weight.grad = 0.5*(model.module.layer1[2].conv2.weight.grad + rand_fix_conv112)
+        model.module.layer1[1].conv2.weight.grad = 0.5*(model.module.layer1[1].conv2.weight.grad + rand_fix_conv112)
         model.module.layer1[2].conv1.weight.grad = 0.5*(model.module.layer1[2].conv1.weight.grad + rand_fix_conv121)
         model.module.layer1[2].conv2.weight.grad = 0.5*(model.module.layer1[2].conv2.weight.grad + rand_fix_conv122)
         
