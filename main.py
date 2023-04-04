@@ -195,7 +195,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         
         model.module.linear.weight.grad = DirectPoisonGrad(model.module.linear.weight.grad, rand_fix_linear)
         '''
-        '''
+        
         loss_grad_conv = GenerateLoss(model.module.conv1.weight.grad, rand_fix_conv)
         #res block1
         loss_grad_conv101 = GenerateLoss(model.module.layer1[0].conv1.weight.grad, rand_fix_conv101)
@@ -225,7 +225,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         loss_grad_linear = GenerateLoss(model.module.linear.weight.grad, rand_fix_linear)
         
         loss_layer = 1 * (loss_grad_conv+ loss_grad_conv101 + loss_grad_conv102 + loss_grad_conv111+ loss_grad_conv112+ loss_grad_conv121+ loss_grad_conv122+ loss_grad_conv201+ loss_grad_conv202+ loss_grad_conv211+loss_grad_conv212+ loss_grad_conv221+ loss_grad_conv222+ loss_grad_conv301+ loss_grad_conv302+loss_grad_conv311+ loss_grad_conv312+ loss_grad_conv321+ loss_grad_conv322+ loss_grad_linear)
-        '''
+        
         #print('loss_layer',loss_layer)
         #loss_new = loss + loss_layer
         #print('loss,loss_layer,loss_new',loss,loss_layer,loss_new)
