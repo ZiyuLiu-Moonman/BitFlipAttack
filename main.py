@@ -25,7 +25,7 @@ parser.add_argument('--outdir', type=str, default='results/', help='folder to sa
 parser.add_argument('--epochs', '-e', default=150, type=int, metavar='N', help='number of total epochs to run')
 parser.add_argument('--batch', '-b', default=128, type=int, metavar='N', help='Mini-batch size (default: 128)')
 parser.add_argument('--opt', type=str, default='sgd', help='sgd or adam optimizer')
-parser.add_argument('--lr', default=1e-4, type=float, help='initial learning rate')
+parser.add_argument('--lr', default=0.1, type=float, help='initial learning rate')
 parser.add_argument('--momentum', default=0.9, type=float, metavar='M', help='momentum')
 parser.add_argument('--schedule', type=str, default='step', help='learning rate schedule')
 parser.add_argument('--weight-decay', '-wd', default=1e-4, type=float, help='weight decay (default: 1e-4 for OCM)')
