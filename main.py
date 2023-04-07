@@ -168,7 +168,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         loss.backward(retain_graph=True)
         #optimizer.step()
         
-        grad_1 = model.module.linear.weight.grad.clone().detach()
+        #grad_1 = model.module.linear.weight.grad.clone().detach()
         '''
         model.module.conv1.weight.grad = DirectPoisonGrad(model.module.conv1.weight.grad, rand_fix_conv)
         
@@ -195,7 +195,7 @@ def train(loader, model, criterion, optimizer, epoch, C):
         
         model.module.linear.weight.grad = DirectPoisonGrad(model.module.linear.weight.grad, rand_fix_linear)
         '''
-        
+        '''
         loss_grad_conv = GenerateLoss(model.module.conv1.weight.grad, rand_fix_conv)
         #res block1
         loss_grad_conv101 = GenerateLoss(model.module.layer1[0].conv1.weight.grad, rand_fix_conv101)
@@ -225,16 +225,16 @@ def train(loader, model, criterion, optimizer, epoch, C):
         loss_grad_linear = GenerateLoss(model.module.linear.weight.grad, rand_fix_linear)
         
         loss_layer = 1 * (loss_grad_conv+ loss_grad_conv101 + loss_grad_conv102 + loss_grad_conv111+ loss_grad_conv112+ loss_grad_conv121+ loss_grad_conv122+ loss_grad_conv201+ loss_grad_conv202+ loss_grad_conv211+loss_grad_conv212+ loss_grad_conv221+ loss_grad_conv222+ loss_grad_conv301+ loss_grad_conv302+loss_grad_conv311+ loss_grad_conv312+ loss_grad_conv321+ loss_grad_conv322+ loss_grad_linear)
-        
+        '''
         #print('loss_layer',loss_layer)
         #loss_new = loss + loss_layer
         #print('loss,loss_layer,loss_new',loss,loss_layer,loss_new)
         
-        print('second_loss',loss_layer)
-        loss_layer.backward()
+        #print('second_loss',loss_layer)
+        #loss_layer.backward()
         
-        grad_2 = model.module.linear.weight.grad.clone().detach()
-        print(grad_1.equal(grad_2))
+        #grad_2 = model.module.linear.weight.grad.clone().detach()
+        #print(grad_1.equal(grad_2))
         
         '''
         #add noise
@@ -376,6 +376,10 @@ def main():
 
             before = time.time()
             train_loss, train_acc = train(train_loader, model, criterion, optimizer, epoch, C)
+            print('weight_conv1 ', model.module.conv1.weight)
+            print('grad_conv1 ', model.module.conv1.weight.grad)
+            print('weight_linear ', model.module.linear.weight)
+            print('grad_linear ', model.module.linear.weight.grad)
             test_loss, test_acc = test(test_loader, model, criterion, C)
             after = time.time()
 
