@@ -165,7 +165,8 @@ def train(loader, model, criterion, optimizer, epoch, C):
         top1.update(acc1.item(), inputs.size(0))
         top5.update(acc5.item(), inputs.size(0))
         
-        loss.backward(retain_graph=True)
+        loss.backward()
+        #loss.backward(retain_graph=True)
         #optimizer.step()
         
         #grad_1 = model.module.linear.weight.grad.clone().detach()
