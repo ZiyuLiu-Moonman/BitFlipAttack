@@ -28,7 +28,7 @@ class CifarResNet(nn.Module):
         self.layer2 = self._make_layer(block, 32, num_blocks[1], stride=2)
         self.layer3 = self._make_layer(block, 64, num_blocks[2], stride=2)
         self.linear = quan_Linear(64, num_output, n_bits=self.n_bits)
-        self.dropout = nn.Dropout(0.25)
+        self.dropout = nn.Dropout(0.5)
         self.output_act = nn.Tanh() if output_act == 'tanh' else None
 
         # Initialize weights
